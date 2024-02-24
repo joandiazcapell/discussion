@@ -1,10 +1,4 @@
 import Config
-import Dotenvy
-
-source!([".env"])
-  config :discuss,
-  github_client_id: env!("GITHUB_CLIENT_ID", :string!),
-  github_client_secret: env!("GITHUB_CLIENT_SECRET", :string)
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
