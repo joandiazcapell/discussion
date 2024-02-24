@@ -11,10 +11,14 @@ defmodule DiscussWeb.Plugs.SetUser do
 
     cond do
       user = user_id && Accounts.get_user!(user_id) ->
-        assign(conn, :user, user)
+        conn
+        |> assign(:user, user)
+        |> assign(:user_signed_in?, true)
         # conn.assigns.user => user struct
       true ->
-        assign(conn, :user, nil)
+        conn
+        |> assign(:user, nil)
+        |> assign(:user_signed_in?, false)
     end
   end
 

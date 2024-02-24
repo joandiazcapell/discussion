@@ -8,17 +8,21 @@
 </.header>
 
 <.table id="topics" rows={@topics} row_click={&JS.navigate(~p"/topics/#{&1}")}>
-  <:col :let={topic} label="Title"><%= topic.title %></:col>  
+  <:col :let={topic} label="Title"><%= topic.title %></:col>
   <:action :let={topic}>
     <div class="sr-only">
       <.link navigate={~p"/topics/#{topic}"}>Show</.link>
-    </div>
+    </div> 
+  <%= if @user && @user.id == topic.user_id do %>
     <.link navigate={~p"/topics/#{topic}/edit"}>Edit</.link>
+  <% end %>
   </:action>
   <:action :let={topic}>
-    <.link href={~p"/topics/#{topic}"} method="delete" data-confirm="Are you sure?">
-      Delete
-    </.link>
+    <%= if @user && @user.id == topic.user_id do %>
+      <.link href={~p"/topics/#{topic}"} method="delete" data-confirm="Are you sure?">
+        Delete
+      </.link>
+    <% end %>
   </:action>
 </.table>
 

@@ -20,7 +20,7 @@
           Discussions
         </a>
         <ul class="right">
-          <%= if @conn.assigns[:user] do %>
+          <%= if @user_signed_in? do %>
             <li>
               <.link navigate={~p"/auth/signout"}>Sign Out</.link>
             </li>
