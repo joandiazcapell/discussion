@@ -1,3 +1,8 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    window.createSocket(<%= @topic.id %>)
+  });
+</script>
 <.header>
   Topic <%= @topic.id %>
   <:subtitle>This is a topic record from your database.</:subtitle>
@@ -11,5 +16,13 @@
 <.list>
   <:item title="Title"><%= @topic.title %></:item>
 </.list>
+<br />
+<h7>Comments</h7>
+<div class="input-field">
+  <textarea class="materialize-textarea"></textarea>
+  <button class="btn" id="comment-text">Add Comment</button>
+  <ul class="collection">
+  </ul>
+</div>
 
 <.back navigate={~p"/topics"}>Back to topics</.back>
