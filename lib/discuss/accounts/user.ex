@@ -10,7 +10,7 @@ defmodule Discuss.Accounts.User do
     field :token, :string
     field :provider, :string
     field :email, :string
-    has_many :topics, Discuss.Topic
+    has_many :topics, Discuss.Posts.Topic
     has_many :comments, Discuss.Comment
 
     timestamps(type: :utc_datetime)

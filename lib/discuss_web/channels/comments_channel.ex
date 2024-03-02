@@ -1,12 +1,11 @@
 defmodule DiscussWeb.CommentsChannel do
   use Phoenix.Channel
 
-  alias Discuss.{Comment, Topic, Repo}
+  alias Discuss.{Comment, Posts, Repo}
 
   def join("comments:" <> topic_id, _params, socket) do
     topic_id = String.to_integer(topic_id)
-    topic = Topic
-      |> Repo.get(topic_id)
+    topic = Posts.get_topic!(topic_id)
       |> Repo.preload(comments: [:user])
 
     {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
