@@ -7,6 +7,7 @@ defmodule Discuss.Posts do
   alias Discuss.Repo
 
   alias Discuss.Posts.Topic
+  alias Discuss.Posts.Comment
 
   @doc """
   Returns the list of topics.
@@ -34,6 +35,11 @@ defmodule Discuss.Posts do
   """
   def get_topic!(id), do: Repo.get!(Topic, id)
 
+  def get_topic_with_comments!(id) do
+    Repo.get!(Topic,id)
+    |> Repo.preload(comments: [:user])
+  end
+
 
   @doc """
   Creates a topic.
@@ -47,10 +53,10 @@ defmodule Discuss.Posts do
       {:error, ...}
 
   """
-  def create_topic(user, attrs \\ %{}) do
-    user
+  def create_topic(attrs) do
+    attrs.user
       |> Ecto.build_assoc(:topics)
-      |> Topic.changeset(attrs)
+      |> Topic.changeset(attrs.topic_params)
       |> Repo.insert()
   end
 
@@ -99,6 +105,13 @@ defmodule Discuss.Posts do
   """
   def change_topic(%Topic{} = topic, attrs \\ %{}) do
     Topic.changeset(topic, attrs)
+  end
+
+  def create_comment(attrs) do
+    attrs.topic
+    |> Ecto.build_assoc(:comments, user: attrs.user)
+    |> Comment.changeset(%{content: attrs.content})
+    |> Repo.insert()
   end
 
 end
